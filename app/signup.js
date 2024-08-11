@@ -1,18 +1,122 @@
-import { View,Text } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { Link } from "expo-router"
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  Button,
+  TouchableOpacity,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { Link, router } from "expo-router";
 
 const Signup = () => {
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.textContainer}>
+        <AntDesign
+          onPress={() => router.push("/")}
+          name="arrowleft"
+          size={20}
+          color="black"
+          style={{
+            borderWidth: 1,
+            borderColor: "#333333",
+            borderRadius: 50,
+            width: "10%",
+            paddingHorizontal: 5,
+            paddingVertical: 5,
+          }}
+        />
+        <Text style={styles.textHeading}>Sign Up Now</Text>
+      </View>
+      <View style={styles.inputContainer}>
         <View>
-          <Link href={"/"}>
-            <Text>Sign in Now</Text>
-          </Link>
-            
+          <Text style={{ fontWeight: "500", marginLeft: 12 }}>Name</Text>
+          <TextInput
+            keyboardType="name-phone-pad"
+            placeholder="Name"
+            style={styles.input}
+          />
         </View>
+        <View>
+          <Text style={{ fontWeight: "500", marginLeft: 12 }}>Email</Text>
+          <TextInput
+            keyboardType="email-address"
+            placeholder="Email Address"
+            style={styles.input}
+          />
+        </View>
+        <View>
+          <Text style={{ fontWeight: "500", marginLeft: 12 }}>Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            placeholder="Password"
+            style={styles.input}
+          />
+        </View>
+      </View>
+      <TouchableOpacity style={styles.button}>
+        <Button title="Sign up" />
+      </TouchableOpacity>
+      <View style={styles.messageTextContainer}>
+        <Text style={{ fontSize: 16, fontWeight: "500" }}>
+          Alredy have an account?{" "}
+        </Text>
+        <Link href="/signin">
+          <Text
+            style={{ fontSize: 16, fontWeight: "500", color: "dodgerblue" }}
+          >
+            Sign In
+          </Text>
+        </Link>
+      </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default Signup
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    flex: 1,
+  },
+  textContainer: {
+    flex: 1,
+  },
+  textHeading: {
+    fontSize: 20,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  inputContainer: {
+    marginTop: 50,
+    flex: 2,
+  },
+  input: {
+    borderRadius: 5,
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    borderColor: "#b0b0b0",
+  },
+  button: {
+    marginTop: 50,
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    flex: 1,
+  },
+  messageTextContainer: {
+    marginTop: 50,
+    display: "flex",
+    flexDirection: "row",
+    textAlign: "center",
+    justifyContent: "center",
+    gap: 5,
+    flex: 1,
+  },
+});
+
+export default Signup;
