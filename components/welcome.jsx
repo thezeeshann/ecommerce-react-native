@@ -1,58 +1,30 @@
-import { View, Text } from "react-native";
-import { StyleSheet } from "react-native";
-import { Image } from "react-native";
-import ButtonApp from "./Button";
-
+import { View, Text, Image } from "react-native";
+import AppButton from "./Button";
+import { router } from "expo-router";
 const Welcome = () => {
   return (
-    <View style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text style={styles.textHeading}>Welcome</Text>
-        <Text style={styles.textSubHeading}>Mern Shopping House</Text>
+    <View className="flex flex-col gap-y-8">
+      <View className="flex flex-col items-center justify-center ">
+        <Text className="font-semibold text-3xl">Welcome</Text>
+        <Text className="text-lg">Mern Shopping House</Text>
       </View>
-      <View style={styles.imageContainer}>
+
+      <View className="">
         <Image
           source={require("../assets/shopping.jpg")}
           style={{ width: 300, height: 350 }}
         />
       </View>
-      <View style={styles.buttonContainer}>
-        <ButtonApp href="/signup" text="Sign Up" />
-        <ButtonApp href="/signin" text="Log in" />
+      <View className="flex flex-col gap-y-5">
+        <AppButton title="Sign Up" onPress={() => router.push("/signup")} />
+        <AppButton
+          title="Log in"
+          onPress={() => router.push("/signin")}
+          color="bg-indigo-100"
+        />
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-  },
-  textContainer: {
-    flex: 0.5,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textHeading: {
-    fontSize: 30,
-    fontWeight: "600",
-  },
-  textSubHeading: {
-    fontSize: 20,
-  },
-  imageContainer: {
-    marginVertical: 30,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonContainer: {
-    display: "flex",
-    rowGap: 16,
-  },
-});
 
 export default Welcome;

@@ -1,18 +1,10 @@
-import { SafeAreaView } from "react-native-safe-area-context";
 import Welcome from "../components/welcome";
-import { StyleSheet } from "react-native";
+import AppScreen from "../components/screen";
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
+    <AppScreen>
       <Welcome />
-    </SafeAreaView>
+    </AppScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-  },
-});

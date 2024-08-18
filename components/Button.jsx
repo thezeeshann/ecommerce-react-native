@@ -1,30 +1,23 @@
-import { StyleSheet, Text } from "react-native";
-import { Link } from "expo-router";
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
 
-const ButtonApp = ({ text, href }) => {
-  const ButtonColor = text === "Sign Up" ? "dodgerblue" : "#e2e6f7";
-  const ButtonTextColor = text === "Sign Up" ? "#ffffff" : "";
-
+function AppButton({ title, onPress, color }) {
   return (
-    <Link
-      href={href}
-      style={[style.buttonContainer, { backgroundColor: ButtonColor }]}
+    <TouchableOpacity
+      className={`${
+        color ? color : "bg-blue-500"
+      } rounded-md flex justify-center items-center py-3 my-2`}
+      onPress={onPress}
     >
-      <Text style={[style.text, { color: ButtonTextColor }]}>{text}</Text>
-    </Link>
+      <Text
+        className={`${
+          color ? "text-black" : "text-white"
+        } text-lg font-semibold`}
+      >
+        {title}
+      </Text>
+    </TouchableOpacity>
   );
-};
+}
 
-const style = StyleSheet.create({
-  buttonContainer: {
-    textAlign: "center",
-    borderRadius: 3,
-    padding: 12,
-  },
-  text: {
-    fontSize: 18,
-    fontWeight: "500",
-  },
-});
-
-export default ButtonApp;
+export default AppButton;
