@@ -1,4 +1,5 @@
 import { Text, View, Image, TouchableOpacity } from "react-native";
+import { Link } from "expo-router";
 
 export default function Products() {
   return (
@@ -8,14 +9,15 @@ export default function Products() {
         {/* card */}
         <View className="w-[48%] rounded-lg">
           <View className="bg-[#e7e7e7] rounded-t-lg p-4">
-            <Image
-              className="mx-auto"
-              source={{
-                uri: "https://i.imgur.com/ZANVnHE.jpeg",
-              }}
-              width={100}
-              height={100}
-            />
+            <Link href="/product/1" className="mx-auto">
+              <Image
+                source={{
+                  uri: "https://i.imgur.com/ZANVnHE.jpeg",
+                }}
+                width={100}
+                height={100}
+              />
+            </Link>
           </View>
           <View className="flex flex-col p-2 bg-white rounded-b-lg">
             <Text className="text-lg text-center">
