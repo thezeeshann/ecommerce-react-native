@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Text, View, Image, ScrollView, FlatList } from "react-native";
 import { AppContext } from "../context/app-context";
+import { Link } from "expo-router";
 
 export default function Categories() {
   const { categories } = useContext(AppContext);
@@ -23,13 +24,15 @@ export default function Categories() {
             renderItem={({ item }) => (
               <View className="flex flex-col items-center justify-center p-2">
                 <View className="bg-[#e7e7e7] p-4 rounded-full mt-4">
-                  <Image
-                    source={{
-                      uri: item.image,
-                    }}
-                    width={40}
-                    height={40}
-                  />
+                  <Link href={`/category/${item.slug}`}>
+                    <Image
+                      source={{
+                        uri: item.image,
+                      }}
+                      width={40}
+                      height={40}
+                    />
+                  </Link>
                 </View>
                 <Text className="text-sm">{item.name}</Text>
               </View>

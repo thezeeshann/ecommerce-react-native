@@ -1,8 +1,6 @@
 import { useState, useEffect, createContext, PropsWithChildren } from "react";
-import {
-  storeDataInStore,
-  getDataFromStore,
-} from "../lib/store";
+import { storeDataInStore, getDataFromStore } from "../lib/store";
+import { ProductType } from "../lib/types";
 
 type CartItem = {
   id: number;
@@ -15,6 +13,8 @@ type CartItem = {
 type CartContextProps = {
   cartItems: CartItem[];
   totalPrice: number;
+  saveProducts: ProductType[];
+  getData: () => void;
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
   clearCart: () => void;
@@ -23,6 +23,8 @@ type CartContextProps = {
 export const CartContext = createContext<CartContextProps>({
   cartItems: [],
   totalPrice: 0,
+  saveProducts: [],
+  getData: () => {},
   addToCart: () => {},
   removeFromCart: () => {},
   clearCart: () => {},
@@ -30,6 +32,7 @@ export const CartContext = createContext<CartContextProps>({
 
 export default function CartProvider({ children }: PropsWithChildren) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [saveProducts, setSaveProducts] = useState<ProductType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
@@ -109,6 +112,17 @@ export default function CartProvider({ children }: PropsWithChildren) {
     setCartItems([]);
   };
 
+  const getData = async () => {
+    const data = await getDataFromStore("cart");
+    if (data) {
+      setSaveProducts(JSON.parse(data));
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
     <CartContext.Provider
       value={{
@@ -117,6 +131,7 @@ export default function CartProvider({ children }: PropsWithChildren) {
         addToCart,
         removeFromCart,
         clearCart,
+        saveProducts,
       }}
     >
       {children}
