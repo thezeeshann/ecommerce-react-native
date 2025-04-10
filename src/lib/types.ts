@@ -13,4 +13,5 @@ export type ProductType = {
   description: string;
   category: CategoryType;
   images: string[];
+  quantity?: number;
 };
