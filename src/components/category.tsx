@@ -5,7 +5,6 @@ export default function Categories() {
     <View className="mt-6">
       <View className="flex-row items-center justify-between ">
         <Text className="text-xl">Categories</Text>
-        <Text className="text-[#444fc0] text-lg">See all</Text>
       </View>
       <ScrollView
         showsVerticalScrollIndicator={false}

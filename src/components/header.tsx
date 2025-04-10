@@ -1,6 +1,6 @@
 import { View, TextInput } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-import React from "react";
+import { Link } from "expo-router";
 
 export default function Header() {
   return (
@@ -14,7 +14,9 @@ export default function Header() {
         <Feather name="search" size={24} color="black" />
       </View>
       <View className="bg-[#e7e7e7] p-4 rounded-full ">
-        <Feather name="shopping-bag" size={24} color="black" />
+        <Link href="/cart">
+          <Feather name="shopping-bag" size={24} color="black" />
+        </Link>
       </View>
     </View>
   );

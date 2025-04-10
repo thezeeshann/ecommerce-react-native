@@ -1,5 +1,4 @@
 import { Stack } from "expo-router";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Feather from "@expo/vector-icons/Feather";
 import { Text, TouchableOpacity, View } from "react-native";
 import "../../global.css";
@@ -8,6 +7,7 @@ function Layout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="cart" options={{ headerShown: false }} />
       <Stack.Screen
         name="product/[productId]"
         options={{

@@ -1,6 +1,4 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderHeight } from "@react-navigation/elements";
