@@ -1,17 +1,18 @@
 import { useState, useEffect, createContext, PropsWithChildren } from "react";
+import { ProductType } from "../lib/types";
 
 type AppContextProps = {
-  products: any;
+  products: ProductType[];
   setProducts: (data: any) => void;
 };
 
 export const AppContext = createContext<AppContextProps>({
-  products: null,
+  products: [],
   setProducts: () => {},
 });
 
 export default function AppContextProvider({ children }: PropsWithChildren) {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<ProductType[]>([]);
 
   const fetchProducts = async () => {
     try {
@@ -27,7 +28,8 @@ export default function AppContextProvider({ children }: PropsWithChildren) {
       }
 
       const result = await response.json();
-      console.log("result", result);
+      const limitedProducts = result.slice(0, 20);
+      setProducts(limitedProducts);
     } catch (error) {
       console.log("something went wrong while fetching post data", error);
     }

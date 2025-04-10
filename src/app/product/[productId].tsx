@@ -2,11 +2,44 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderHeight } from "@react-navigation/elements";
+import { useEffect, useState } from "react";
+import { ProductType } from "../../lib/types";
 
 export default function SingleProduct() {
+  const [singleProduct, setSingleProduct] = useState<ProductType | null>(null);
   const { productId } = useLocalSearchParams();
   const headerHeight = useHeaderHeight();
-  console.log(headerHeight);
+
+  const fetchSingleProduct = async (productId: number) => {
+    try {
+      const response = await fetch(
+        `https://api.escuelajs.co/api/v1/products/${productId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setSingleProduct(result);
+      console.log("single product data", result);
+    } catch (error) {
+      console.log(
+        "something went wrong while fetching single product data",
+        error
+      );
+    }
+  };
+
+  useEffect(() => {
+    fetchSingleProduct(Number(productId));
+  }, []);
 
   return (
     <SafeAreaView className="flex-1 px-4 py-2">
@@ -15,23 +48,20 @@ export default function SingleProduct() {
           <Image
             className="mx-auto"
             source={{
-              uri: "https://i.imgur.com/ZANVnHE.jpeg",
+              uri: singleProduct?.images[0],
             }}
             width={350}
             height={300}
           />
         </View>
         <Text className="mt-4 text-2xl font-semibold">
-          Classic High-Waisted Athletic Shorts
+          {singleProduct?.title}
         </Text>
-        <Text className="mt-4 text-xl text-gray-600">$43</Text>
+        <Text className="mt-4 text-xl text-gray-600">
+          ${singleProduct?.price}
+        </Text>
         <Text className="mt-4 text-lg leading-loose text-gray-700">
-          Stay comfortable and stylish with our Classic High-Waisted Athletic
-          Shorts. Designed for optimal movement and versatility, these shorts
-          are a must-have for your workout wardrobe. Featuring a
-          figure-flattering high waist, breathable fabric, and a secure fit that
-          ensures they stay in place during any activity, these shorts are
-          perfect for the gym, running, or even just casual wear.
+          {singleProduct?.description}
         </Text>
         <TouchableOpacity className="bg-[#444fc0] px-4 py-4 mt-6 rounded-md">
           <Text className="text-lg text-center text-white">Add to Cart</Text>
