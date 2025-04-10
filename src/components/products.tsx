@@ -30,7 +30,10 @@ export default function Products() {
               </View>
               <View className="flex flex-col p-2 bg-white rounded-b-lg">
                 <Text className="text-lg text-center">{item.title}</Text>
-                <Text className="text-center">${item.price}</Text>
+                <Text className="text-center">
+                  Category {item.category.name}
+                </Text>
+                <Text className="text-center">Price ${item.price}</Text>
                 <TouchableOpacity className="bg-[#444fc0] px-4 py-4 mt-2 rounded-md">
                   <Text className="text-lg text-center text-white">
                     Add to Cart
