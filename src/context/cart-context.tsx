@@ -15,6 +15,8 @@ type CartContextProps = {
   addToCart: (item: CartItem) => void;
   removeFromCart: (item: CartItem) => void;
   clearCart: () => void;
+  incrementQuantity: (itemId: number) => void; 
+  decrementQuantity: (itemId: number) => void; 
 };
 
 export const CartContext = createContext<CartContextProps | null>(null);
@@ -100,6 +102,24 @@ export default function CartProvider({ children }: PropsWithChildren) {
     setCartItems([]);
   };
 
+  const incrementQuantity = (itemId: number) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decrementQuantity = (itemId: number) => {
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.id === itemId && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+    );
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -108,6 +128,8 @@ export default function CartProvider({ children }: PropsWithChildren) {
         addToCart,
         removeFromCart,
         clearCart,
+        incrementQuantity, 
+        decrementQuantity,
       }}
     >
       {children}
