@@ -7,8 +7,8 @@ import "../../global.css";
 
 function Layout() {
   return (
-    <AppContextProvider>
-      <CartProvider>
+    <CartProvider>
+      <AppContextProvider>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="cart" options={{ headerShown: false }} />
@@ -38,8 +38,8 @@ function Layout() {
             }}
           />
         </Stack>
-      </CartProvider>
-    </AppContextProvider>
+      </AppContextProvider>
+    </CartProvider>
   );
 }
 

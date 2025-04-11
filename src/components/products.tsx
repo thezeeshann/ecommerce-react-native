@@ -3,10 +3,12 @@ import { Link } from "expo-router";
 import { useContext } from "react";
 import { AppContext } from "../context/app-context";
 import { CartContext } from "../context/cart-context";
+import { useCartContext } from "../lib/hooks";
 
 export default function Products() {
   const { products } = useContext(AppContext);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cartItems } = useCartContext();
+  console.log("cartItems", cartItems);
 
   return (
     <View className="px-2 mt-6">
@@ -38,7 +40,15 @@ export default function Products() {
                 <Text className="text-center">Price ${item.price}</Text>
                 <TouchableOpacity className="bg-[#444fc0] px-4 py-4 mt-2 rounded-md">
                   <Text
-                    onPress={() => addToCart(item)}
+                    onPress={() => {
+                      console.log("Add to cart", item);
+                      addToCart({
+                        id: item.id,
+                        title: item.title,
+                        price: item.price,
+                        quantity: 1,
+                      });
+                    }}
                     className="text-lg text-center text-white"
                   >
                     Add to Cart

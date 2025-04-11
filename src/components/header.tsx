@@ -1,16 +1,16 @@
-import { View, TextInput, Text, Image } from "react-native";
+import { View, TextInput, Text } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { Link } from "expo-router";
 import { useContext, useEffect, useState } from "react";
-import { CartContext } from "../context/cart-context";
 import { useDebounce } from "../lib/hooks";
 import { AppContext } from "../context/app-context";
 import { ProductType } from "../lib/types";
+import { useCartContext } from "../lib/hooks";
 
 export default function Header() {
   const [seachQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<ProductType[]>([]);
-  const { saveProducts } = useContext(CartContext);
+  const { cartItems } = useCartContext();
   const { products } = useContext(AppContext);
   const debouncedValue = useDebounce(seachQuery);
 
@@ -44,28 +44,28 @@ export default function Header() {
               <Feather name="shopping-bag" size={24} color="black" />
             </Link>
           </View>
-          {saveProducts.length > 0 && (
+          {cartItems.length > 0 && (
             <View className="absolute items-center justify-center w-5 h-5 bg-red-500 rounded-md -top-1 -right-1">
               <Text className="text-xs font-bold text-white">
-                {saveProducts.length}
+                {cartItems.length}
               </Text>
             </View>
           )}
         </View>
+      </View>
+      {results && seachQuery && (
+        <View className="absolute z-50 w-full mt-2 space-y-2 top-16 ">
+          {results.map((result) => (
+            <Link href={`/product/${result.id}`} key={result.id}>
+              <View className="w-full h-16 px-4 py-4 bg-white border border-gray-200 shadow-sm rounded-xl">
+                <Text className="text-base font-semibold text-black">
+                  {result.title}
+                </Text>
+              </View>
+            </Link>
+          ))}
         </View>
-        {results && seachQuery && (
-          <View className="absolute z-50 w-full mt-2 space-y-2 top-16 ">
-            {results.map((result) => (
-              <Link href={`/product/${result.id}`} key={result.id}>
-                <View className="w-full h-16 px-4 py-4 bg-white border border-gray-200 shadow-sm rounded-xl">
-                  <Text className="text-base font-semibold text-black">
-                    {result.title}
-                  </Text>
-                </View>
-              </Link>
-            ))}
-          </View>
-        )}
+      )}
     </View>
   );
 }

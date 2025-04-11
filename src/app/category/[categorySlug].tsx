@@ -1,5 +1,5 @@
 import { useLocalSearchParams, Link } from "expo-router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,11 +10,11 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProductType } from "../../lib/types";
-import { CartContext } from "../../context/cart-context";
+import { useCartContext } from "../../lib/hooks";
 
 export default function CategoriesProducts() {
   const { categorySlug } = useLocalSearchParams();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCartContext();
   const [categoryProducts, setCategoryProducts] = useState<ProductType[]>([]);
 
   const fetchCategoryProducts = async (categorySlug: string) => {
