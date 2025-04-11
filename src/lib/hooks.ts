@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../context/cart-context";
 
 export function useDebounce(value: string): string {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -11,4 +12,14 @@ export function useDebounce(value: string): string {
   }, [value]);
 
   return debouncedValue;
+}
+
+export function useCartContext() {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error(
+      "useCartContext must be used within a CartContextProvider"
+    );
+  }
+  return context;
 }
