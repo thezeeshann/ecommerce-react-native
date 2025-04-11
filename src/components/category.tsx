@@ -1,10 +1,9 @@
-import { useContext } from "react";
 import { Text, View, Image, ScrollView, FlatList } from "react-native";
-import { AppContext } from "../context/app-context";
 import { Link } from "expo-router";
+import { useAppContext } from "../lib/hooks";
 
 export default function Categories() {
-  const { categories } = useContext(AppContext);
+  const { categories } = useAppContext();
 
   return (
     <View className="mt-6">

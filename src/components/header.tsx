@@ -1,9 +1,9 @@
 import { View, TextInput, Text } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { Link } from "expo-router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "../lib/hooks";
-import { AppContext } from "../context/app-context";
+import { useAppContext } from "../lib/hooks";
 import { ProductType } from "../lib/types";
 import { useCartContext } from "../lib/hooks";
 
@@ -11,7 +11,7 @@ export default function Header() {
   const [seachQuery, setSearchQuery] = useState("");
   const [results, setResults] = useState<ProductType[]>([]);
   const { cartItems } = useCartContext();
-  const { products } = useContext(AppContext);
+  const { products } = useAppContext();
   const debouncedValue = useDebounce(seachQuery);
 
   useEffect(() => {

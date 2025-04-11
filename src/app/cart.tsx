@@ -7,8 +7,14 @@ import { router } from "expo-router";
 import { useCartContext } from "../lib/hooks";
 
 export default function Cart() {
-  const { cartItems, removeFromCart, totalPrice, clearCart } = useCartContext();
-  console.log(cartItems.length);
+  const {
+    cartItems,
+    removeFromCart,
+    totalPrice,
+    clearCart,
+    incrementQuantity,
+    decrementQuantity,
+  } = useCartContext();
 
   return (
     <SafeAreaView className="w-full h-full px-4 py-2 ">
@@ -61,6 +67,7 @@ export default function Cart() {
 
                     <View className="flex flex-row items-center mt-4 gap-x-4">
                       <AntDesign
+                        onPress={() => decrementQuantity(item.id)}
                         name="minus"
                         size={20}
                         color="black"
@@ -70,6 +77,7 @@ export default function Cart() {
                         {item?.quantity}
                       </Text>
                       <AntDesign
+                        onPress={() => incrementQuantity(item.id)}
                         name="plus"
                         size={20}
                         color="black"

@@ -1,11 +1,10 @@
 import { Text, View, Image, TouchableOpacity, FlatList } from "react-native";
 import { Link } from "expo-router";
-import { useContext } from "react";
-import { AppContext } from "../context/app-context";
 import { useCartContext } from "../lib/hooks";
+import { useAppContext } from "../lib/hooks";
 
 export default function Products() {
-  const { products } = useContext(AppContext);
+  const { products } = useAppContext();
   const { addToCart, cartItems, removeFromCart } = useCartContext();
   const isInCart = (productId: number) => {
     return cartItems.some((item) => item.id === productId);
