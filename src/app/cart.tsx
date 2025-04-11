@@ -2,19 +2,13 @@ import { StatusBar } from "expo-status-bar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import { router } from "expo-router";
 import { useCartContext } from "../lib/hooks";
 
 export default function Cart() {
   const { cartItems, removeFromCart, totalPrice, clearCart } = useCartContext();
+  console.log(cartItems.length);
 
   return (
     <SafeAreaView className="w-full h-full px-4 py-2 ">
@@ -28,21 +22,16 @@ export default function Cart() {
           color="black"
         />
         <Text className="w-[60%] text-center text-xl font-bold">My Cart</Text>
-        <Feather
-          className="w-[20%] ml-6  "
-          name="shopping-bag"
-          size={24}
-          color="black"
-        />
       </View>
 
-      <View className="px-4 pt-14">
-        {cartItems.length === 0 ? (
-          <View className="flex-1 items-center justify-center h-[80%]">
-            <Text className="text-lg font-bold">Your cart is empty</Text>
-          </View>
-        ) : (
+      {cartItems.length === 0 ? (
+        <View className="items-center justify-center flex-1">
+          <Text className="text-lg font-bold">Your cart is empty</Text>
+        </View>
+      ) : (
+        <View className="flex-1">
           <FlatList
+            className="pt-4"
             data={cartItems}
             keyExtractor={(item) =>
               item?.id?.toString() || Math.random().toString()
@@ -51,7 +40,6 @@ export default function Cart() {
               if (!item) return null;
               return (
                 <View className="flex flex-row items-start justify-between p-2 mb-4 bg-white shadow-md rounded-xl">
-                  {/* Product Image */}
                   <View className="p-2">
                     <Image
                       className="rounded-lg"
@@ -65,7 +53,6 @@ export default function Cart() {
                     />
                   </View>
 
-                  {/* Title, Price, Quantity */}
                   <View className="w-[55%]">
                     <Text className="text-lg font-semibold">{item?.title}</Text>
                     <Text className="mt-2 text-base font-medium text-gray-700">
@@ -91,7 +78,6 @@ export default function Cart() {
                     </View>
                   </View>
 
-                  {/* Remove Button */}
                   <TouchableOpacity onPress={() => removeFromCart(item)}>
                     <Entypo name="cross" size={24} color="black" />
                   </TouchableOpacity>
@@ -99,21 +85,22 @@ export default function Cart() {
               );
             }}
           />
-        )}
-      </View>
 
-      <View className="mt-20">
-        <View className="flex flex-row items-center justify-between mt-4">
-          <Text className="text-2xl w-[80%] ">Sub Total</Text>
-          <Text className="text-lg w-[20%]">${totalPrice}</Text>
+          {/* Checkout Section - Only shown when cart has items */}
+          <View className="mt-4 mb-8">
+            <View className="flex flex-row items-center justify-between">
+              <Text className="text-2xl w-[80%]">Sub Total</Text>
+              <Text className="text-lg w-[20%]">${totalPrice}</Text>
+            </View>
+            <TouchableOpacity
+              onPress={clearCart}
+              className="bg-[#444fc0] px-4 py-4 mt-6 rounded-md"
+            >
+              <Text className="text-lg text-center text-white">Checkout</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <TouchableOpacity
-          onPress={() => clearCart()}
-          className="bg-[#444fc0] px-4 py-4 mt-6 rounded-md"
-        >
-          <Text className="text-lg text-center text-white">Checkout</Text>
-        </TouchableOpacity>
-      </View>
+      )}
     </SafeAreaView>
   );
 }
