@@ -4,11 +4,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useEffect, useState } from "react";
 import { ProductType } from "../../lib/types";
+import { useCartContext } from "../../lib/hooks";
 
 export default function SingleProduct() {
   const [singleProduct, setSingleProduct] = useState<ProductType | null>(null);
   const { productId } = useLocalSearchParams();
+  const { addToCart, cartItems, removeFromCart } = useCartContext();
   const headerHeight = useHeaderHeight();
+  const isInCart = (productId: number) => {
+    return cartItems.some((item) => item.id === productId);
+  };
 
   const fetchSingleProduct = async (productId: number) => {
     try {
@@ -63,9 +68,31 @@ export default function SingleProduct() {
         <Text className="mt-4 text-lg leading-loose text-gray-700">
           {singleProduct?.description}
         </Text>
-        <TouchableOpacity className="bg-[#444fc0] px-4 py-4 mt-6 rounded-md">
-          <Text className="text-lg text-center text-white">Add to Cart</Text>
-        </TouchableOpacity>
+
+        {isInCart(singleProduct?.id) ? (
+          <TouchableOpacity
+            onPress={() => removeFromCart(singleProduct)}
+            className="px-4 py-4 mt-2 bg-red-500 rounded-md"
+          >
+            <Text className="text-lg text-center text-white">
+              Remove from Cart
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={() => {
+              addToCart({
+                id: singleProduct?.id,
+                title: singleProduct?.title,
+                price: singleProduct?.price,
+                quantity: 1,
+              });
+            }}
+            className="bg-[#444fc0] px-4 py-4 mt-6 rounded-md"
+          >
+            <Text className="text-lg text-center text-white">Add to Cart</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </SafeAreaView>
   );

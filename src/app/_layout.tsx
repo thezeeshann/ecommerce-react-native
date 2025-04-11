@@ -30,11 +30,6 @@ function Layout() {
               headerTitle: () => (
                 <Text className="text-xl font-bold">Product Details</Text>
               ),
-              headerRight: () => (
-                <TouchableOpacity className="pr-4">
-                  <Feather name="shopping-bag" size={24} color="black" />
-                </TouchableOpacity>
-              ),
             }}
           />
         </Stack>

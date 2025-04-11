@@ -2,13 +2,14 @@ import { Text, View, Image, TouchableOpacity, FlatList } from "react-native";
 import { Link } from "expo-router";
 import { useContext } from "react";
 import { AppContext } from "../context/app-context";
-import { CartContext } from "../context/cart-context";
 import { useCartContext } from "../lib/hooks";
 
 export default function Products() {
   const { products } = useContext(AppContext);
-  const { addToCart, cartItems } = useCartContext();
-  console.log("cartItems", cartItems);
+  const { addToCart, cartItems, removeFromCart } = useCartContext();
+  const isInCart = (productId: number) => {
+    return cartItems.some((item) => item.id === productId);
+  };
 
   return (
     <View className="px-2 mt-6">
@@ -38,10 +39,18 @@ export default function Products() {
                   Category {item.category.name}
                 </Text>
                 <Text className="text-center">Price ${item.price}</Text>
-                <TouchableOpacity className="bg-[#444fc0] px-4 py-4 mt-2 rounded-md">
-                  <Text
+                {isInCart(item.id) ? (
+                  <TouchableOpacity
+                    onPress={() => removeFromCart(item)}
+                    className="px-4 py-4 mt-2 bg-red-500 rounded-md"
+                  >
+                    <Text className="text-lg text-center text-white">
+                      Remove from Cart
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
                     onPress={() => {
-                      console.log("Add to cart", item);
                       addToCart({
                         id: item.id,
                         title: item.title,
@@ -49,11 +58,13 @@ export default function Products() {
                         quantity: 1,
                       });
                     }}
-                    className="text-lg text-center text-white"
+                    className="bg-[#444fc0] px-4 py-4 mt-2 rounded-md"
                   >
-                    Add to Cart
-                  </Text>
-                </TouchableOpacity>
+                    <Text className="text-lg text-center text-white">
+                      Add to Cart
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           )}
